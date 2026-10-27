@@ -1,18 +1,19 @@
 import { Component } from 'react';
 
 import { Searchbar } from './components/Searchbar/Searchbar';
-import { ImageGellery } from './components/ImageGallery/ImageGallery';
+import { ImageGallery } from './components/ImageGallery/ImageGallery';
+import { Loader } from './components/Loader/Loader';
+import { Button } from './components/Button/Button';
 
 import './App.css';
 
 class App extends Component {
 	state = {
 		images: [],
-		isLoading: false,
 		pageIndex: 1,
 		query: '',
 		error: null,
-		status: 'idle'
+		status: 'idle' // 'idle' | 'pending' | 'resolved' | 'rejected'
 	};
 
 	static API_KEY = import.meta.env.VITE_PIXABAY_API_KEY;
@@ -26,22 +27,34 @@ class App extends Component {
 			status: 'idle'
 		});
 
-		this.fetchImages(query);
+		this.fetchImages(query, 1);
 	};
 
-	fetchImages = query => {
-		const BASE_URL = 'https://pixabay.com/api/';
+	handleLoadMore = () => {
+		this.setState(
+			prevState => ({
+				pageIndex: prevState.pageIndex + 1
+			}),
+			() => {
+				this.fetchImages(this.state.query, this.state.pageIndex);
+			}
+		);
+	};
 
+	fetchImages = (query, page) => {
+		const BASE_URL = 'https://pixabay.com/api/';
 		const searchParams = new URLSearchParams({
 			key: App.API_KEY,
 			q: query,
-			page: this.state.pageIndex,
+			page: page,
 			image_type: 'photo',
 			orientation: 'horizontal',
 			per_page: '12'
 		});
 
 		const url = `${BASE_URL}?${searchParams.toString()}`;
+
+		this.setState({ status: 'pending' });
 
 		return fetch(url)
 			.then(res => {
@@ -50,17 +63,30 @@ class App extends Component {
 				}
 				return Promise.reject(new Error('Smth went wrong :('));
 			})
-			.then(data => this.setState({ images: data.hits, status: 'pending' }))
-			.catch(error => this.setState({ error, status: 'rejected' }))
-			.finally(() => this.setState({ status: 'resolved' }));
+			.then(data =>
+				this.setState(prevState => ({
+					images: [...prevState.images, ...data.hits],
+					status: 'resolved'
+				}))
+			)
+			.catch(error => this.setState({ error, status: 'rejected' }));
 	};
 
 	render() {
+		const { images, status } = this.state;
+
 		return (
-			<>
+			<div className='App'>
 				<Searchbar onSubmit={this.handleSearch} />
-				<ImageGellery images={this.state.images} />
-			</>
+
+				{images.length > 0 && <ImageGallery images={images} />}
+
+				{status === 'pending' && <Loader />}
+
+				{status === 'resolved' && images.length > 0 && (
+					<Button onClick={this.handleLoadMore} />
+				)}
+			</div>
 		);
 	}
 }

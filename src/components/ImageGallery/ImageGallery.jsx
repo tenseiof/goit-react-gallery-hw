@@ -2,13 +2,13 @@ import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
 
 import css from './ImageGallery.module.css';
 
-export const ImageGellery = ({ images }) => {
+export const ImageGallery = ({ images }) => {
 	return (
 		<ul className={css.imageGallery}>
-			{images.map(({ id, name, largeImageURL, webformatURL }) => (
+			{images.map(({ id, tags, largeImageURL, webformatURL }) => (
 				<ImageGalleryItem
 					key={id}
-					name={name}
+					tags={tags}
 					largeImageURL={largeImageURL}
 					webformatURL={webformatURL}
 				/>
