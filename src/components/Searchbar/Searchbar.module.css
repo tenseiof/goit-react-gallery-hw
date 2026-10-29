@@ -48,8 +48,14 @@
 	opacity: 1;
 }
 
+.SearchForm_button:disabled {
+	opacity: 0.35;
+	cursor: not-allowed;
+}
+
 .SearchForm_button_label {
 	position: absolute;
+	flex-shrink: 0;
 	width: 1px;
 	height: 1px;
 	padding: 0;
@@ -61,14 +67,25 @@
 }
 
 .SearchForm_input {
-	display: inline-block;
+	display: block;
+	flex: 1;
+	min-width: 0;
 	width: 100%;
+	box-sizing: border-box;
 	font: inherit;
 	font-size: 20px;
 	border: none;
 	outline: none;
-	padding-left: 4px;
-	padding-right: 4px;
+	padding: 12px 8px;
+	line-height: 1.4;
+}
+
+.SearchForm_input:disabled {
+	cursor: wait;
+}
+
+.SearchForm_button:disabled {
+	cursor: wait;
 }
 
 .SearchForm_input::placeholder {

@@ -1,0 +1,103 @@
+.statusMessage {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 14px;
+	width: min(100% - 32px, 460px);
+	margin: 56px auto;
+	padding: 36px 28px;
+	box-sizing: border-box;
+	text-align: center;
+	border: 1px solid #e2e8f0;
+	border-radius: 20px;
+	background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+	box-shadow: 0 12px 32px rgb(15 23 42 / 6%);
+	animation: appear 300ms ease-out;
+}
+
+.illustration {
+	position: relative;
+	display: grid;
+	place-items: center;
+	width: 88px;
+	height: 88px;
+	border: 1px solid currentColor;
+	border-radius: 28px;
+	background: rgb(255 255 255 / 70%);
+}
+
+.iconGlow {
+	position: absolute;
+	inset: 12px;
+	border-radius: 50%;
+	background: currentColor;
+	opacity: 0.12;
+	filter: blur(12px);
+}
+
+.icon {
+	position: relative;
+}
+
+.idle {
+	color: #6366f1;
+	border-color: #c7d2fe;
+	background: linear-gradient(145deg, #ffffff, #eef2ff);
+}
+
+.empty {
+	color: #0284c7;
+	border-color: #bae6fd;
+	background: linear-gradient(145deg, #ffffff, #f0f9ff);
+}
+
+.error {
+	color: #dc2626;
+	border-color: #fecaca;
+	background: linear-gradient(145deg, #ffffff, #fff1f2);
+}
+
+.title {
+	margin: 4px 0 0;
+	color: #1e293b;
+	font-size: 21px;
+	font-weight: 650;
+	letter-spacing: -0.035em;
+}
+
+.message {
+	max-width: 340px;
+	margin: 0;
+	color: #64748b;
+	font-size: 14px;
+	line-height: 1.7;
+}
+
+@keyframes appear {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@media (max-width: 480px) {
+	.statusMessage {
+		margin: 32px auto;
+		padding: 28px 20px;
+	}
+
+	.title {
+		font-size: 19px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.statusMessage {
+		animation: none;
+	}
+}

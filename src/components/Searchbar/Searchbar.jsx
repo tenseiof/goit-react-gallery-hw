@@ -1,17 +1,16 @@
 import css from './Searchbar.module.css';
 
-export const Searchbar = ({ onSubmit }) => {
+export const Searchbar = ({ onSubmit, isLoading }) => {
 	const onHandleSubmit = e => {
 		e.preventDefault();
 
-		const formData = new FormData(e.currentTarget);
+		const form = e.currentTarget;
+		const formData = new FormData(form);
 		const searchInput = formData.get('search');
 		const queryText = searchInput.trim();
 
 		if (queryText !== '') {
 			onSubmit(queryText);
-		} else {
-			alert('Try to search something...');
 		}
 
 		e.currentTarget.reset();
@@ -20,8 +19,15 @@ export const Searchbar = ({ onSubmit }) => {
 	return (
 		<header className={css.Searchbar}>
 			<form className={css.SearchForm} onSubmit={onHandleSubmit}>
-				<button type='submit' className={css.SearchForm_button}>
-					<span className={css.SearchForm_button_label}>Search</span>
+				<button
+					type='submit'
+					disabled={isLoading}
+					className={css.SearchForm_button}
+					aria-label={isLoading ? 'Searching images...' : 'Search images'}
+				>
+					<span className={css.SearchForm_button_label}>
+						{isLoading ? 'Loading...' : 'Search'}
+					</span>
 				</button>
 
 				<input
@@ -30,7 +36,7 @@ export const Searchbar = ({ onSubmit }) => {
 					name='search'
 					autoComplete='off'
 					autoFocus
-					required
+					disabled={isLoading}
 					placeholder='Search images and photos'
 				/>
 			</form>

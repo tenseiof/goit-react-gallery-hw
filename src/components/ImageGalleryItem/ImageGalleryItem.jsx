@@ -2,8 +2,9 @@ import css from './ImageGalleryItem.module.css';
 
 export const ImageGalleryItem = ({
 	tags,
-	// largeImageURL,
-	webformatURL
+	largeImageURL,
+	webformatURL,
+	onImageClick
 }) => {
 	return (
 		<li className={css.imageGalleryItem}>
@@ -11,6 +12,7 @@ export const ImageGalleryItem = ({
 				src={webformatURL}
 				alt={tags}
 				className={css.imageGalleryItem_image}
+				onClick={() => onImageClick(largeImageURL, tags)}
 			/>
 		</li>
 	);
