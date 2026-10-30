@@ -15,7 +15,7 @@ class App extends Component {
 		pageIndex: 1,
 		query: '',
 		error: null,
-		status: 'idle', // 'idle' | 'pending' | 'resolved' | 'rejected'
+		status: 'idle', // 'pending' | 'resolved' | 'rejected'
 		totalHits: 0,
 		modalImage: null,
 		tags: null
