@@ -1,11 +1,9 @@
-/* Центрирование кнопки на странице */
 .buttonContainer {
 	display: flex;
 	justify-content: center;
 	padding: 20px 0;
 }
 
-/* Стили самой кнопки */
 .button {
 	padding: 12px 30px;
 	border-radius: 8px;
